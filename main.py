@@ -18,8 +18,14 @@ LETTER = "H"  # hectic
 def main() -> None:
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
-    with open(os.path.join(out_dir, "entry.txt"), "w", encoding="utf-8") as fh:
+    path = os.path.join(out_dir, "entry.txt")
+    with open(path, "w", encoding="utf-8") as fh:
         fh.write(LETTER)
+    with open(path, "rb") as fh:
+        written = fh.read()
+    assert len(written) == 1 and 65 <= written[0] <= 90, (
+        "entry must be exactly one byte: an uppercase letter A-Z"
+    )
 
 
 if __name__ == "__main__":
